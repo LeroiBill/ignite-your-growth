@@ -14,13 +14,140 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      night_members: {
+        Row: {
+          joined_at: string
+          night_id: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          joined_at?: string
+          night_id: string
+          user_id: string
+          xp?: number
+        }
+        Update: {
+          joined_at?: string
+          night_id?: string
+          user_id?: string
+          xp?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "night_members_night_id_fkey"
+            columns: ["night_id"]
+            isOneToOne: false
+            referencedRelation: "nights"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "night_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nights: {
+        Row: {
+          code: string
+          created_at: string
+          drink_count: number
+          ended_at: string | null
+          host_id: string
+          id: string
+          name: string
+          started_at: string | null
+          status: string
+          updated_at: string
+          venue_count: number
+          visibility: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          drink_count?: number
+          ended_at?: string | null
+          host_id: string
+          id?: string
+          name: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          venue_count?: number
+          visibility?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          drink_count?: number
+          ended_at?: string | null
+          host_id?: string
+          id?: string
+          name?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          venue_count?: number
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nights_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          age_confirmed_at: string | null
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          is_adult: boolean
+          lifetime_xp: number
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          age_confirmed_at?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          is_adult?: boolean
+          lifetime_xp?: number
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          age_confirmed_at?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          is_adult?: boolean
+          lifetime_xp?: number
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_night_member: {
+        Args: { _night_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
