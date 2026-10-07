@@ -34,10 +34,13 @@ function Welcome() {
       username,
       is_adult: true,
       age_confirmed_at: profile?.age_confirmed_at ?? new Date().toISOString(),
-      avatar_url: profile?.avatar_url ?? (user.user_metadata?.avatar_url as string | undefined) ?? null,
+      avatar_url: profile?.avatar_url ?? (user.user_metadata?.["avatar_url"] as string | undefined) ?? null,
     });
     setSaving(false);
-    if (error) return toast.error(error.code === "23505" ? "That @username is taken" : error.message);
+    if (error) {
+      toast.error(error.code === "23505" ? "That @username is taken" : error.message);
+      return;
+    }
     await qc.invalidateQueries({ queryKey: ["profile", user.id] });
     navigate({ to: "/home", replace: true });
   }

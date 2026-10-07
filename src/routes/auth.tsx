@@ -46,7 +46,10 @@ function AuthPage() {
       options: { emailRedirectTo: window.location.origin + "/auth" },
     });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     setSent(true);
   }
 
